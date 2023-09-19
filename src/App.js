@@ -17,7 +17,7 @@ function Board() {
   const [board, setBoard] = useState(Array(9).fill(null));
 
   //Game always start with player X, even-round is always Player X and odd-round is always Player O
-  const [isXNext, setIsXNext] = useState(false);
+  const [isXNext, setIsXNext] = useState(true);
 
   function handleSquareClick(squareIndex) {
 
@@ -29,10 +29,10 @@ function Board() {
     const currentBoard = board.slice();
     
     if (isXNext) {
-      currentBoard[squareIndex] = 'O';
+      currentBoard[squareIndex] = 'X';
     }
     else {
-      currentBoard[squareIndex] = 'X';
+      currentBoard[squareIndex] = 'O';
     }
     setBoard(currentBoard);
     setIsXNext(!isXNext);
@@ -101,11 +101,16 @@ function Board() {
 
 };
 
-// function Game() {
+function Game() {
 
-//   // Define history = list of board arrays [ [null, ...null], ..., [null, ...null]  ]
-//   [history, setHistory] = useState([Array(9).fill(null)]);
+  // Define history = max 9 moves => list of 9x board arrays [ [null, ...null], ..., [null, ...null]  ]
+  const [history, setHistory] = useState([Array(9).fill(null)]);
 
-// };
+  //Define currentBoard as last move
+  const currentBoard = history[history.length - 1];
+
+  console.log(currentBoard);
+
+};
 
 export default Board;
