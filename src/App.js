@@ -11,13 +11,13 @@ function Square( {square, onSquareClick} ) {
 
 }
 
-function Board() {
+function Board( {board, isXNext, onPlay} ) {
 
   //Define board state = array of 9: [null, null, ...null]
-  const [board, setBoard] = useState(Array(9).fill(null));
+  // const [board, setBoard] = useState(Array(9).fill(null));
 
   //Game always start with player X, even-round is always Player X and odd-round is always Player O
-  const [isXNext, setIsXNext] = useState(true);
+  // const [isXNext, setIsXNext] = useState(true);
 
   function handleSquareClick(squareIndex) {
 
@@ -26,16 +26,17 @@ function Board() {
       return;
     }
 
-    const currentBoard = board.slice();
+    const nextBoard = board.slice();
     
     if (isXNext) {
-      currentBoard[squareIndex] = 'X';
+      nextBoard[squareIndex] = 'X';
     }
     else {
-      currentBoard[squareIndex] = 'O';
+      nextBoard[squareIndex] = 'O';
     }
-    setBoard(currentBoard);
-    setIsXNext(!isXNext);
+    // setBoard(currentBoard);
+    // setIsXNext(!isXNext);
+    onPlay(nextBoard);
   };
 
   //return True if board is fullly marked, game ties/no winner
@@ -103,14 +104,65 @@ function Board() {
 
 function Game() {
 
-  // Define history = max 9 moves => list of 9x board arrays [ [null, ...null], ..., [null, ...null]  ]
+  // Define history = max 9 moves => list of 9x board arrays [ [null, ...null], ..., [X, ...O]  ]
   const [history, setHistory] = useState([Array(9).fill(null)]);
 
-  //Define currentBoard as last move
-  const currentBoard = history[history.length - 1];
+  // Define current move#, default 0 to  max 8
+  const [currentMove, setCurrentMove] = useState(0);
 
-  console.log(currentBoard);
+  //Define currentBoard based on current move#
+  const currentBoard = history[currentMove];
+
+  //Game always start with player X, even-move# is always Player X and odd-move# is always Player O
+  const isXNext = currentMove % 2 === 0 ? true: false
+
+  function handlePlay(nextBoard) {
+    // setBoard(nextBoard);
+    //slice to the current history and add current move as next history
+    const nextHistory = [...history.slice(0, currentMove + 1), nextBoard];
+    setHistory(nextHistory);
+
+    // setIsXNext(!isXNext);
+    setCurrentMove(nextHistory.length - 1);
+  };
+
+  function getMoveHistory(history) {
+
+    let moves = [];
+    history.forEach((move, moveIndex) => {
+
+      let moveDescription = '';
+
+      if (moveIndex === 0) {
+        moveDescription = 'Go to game start';
+      }
+      else {
+        moveDescription = move
+      }
+
+      moves.push(
+        <li key={moveIndex}>
+          <button>{moveDescription}</button>
+        </li>
+      );
+
+    });
+
+    return moves;
+
+  };
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board board={currentBoard} isXNext={isXNext} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{getMoveHistory(history)}</ol>
+      </div>
+    </div>
+  );
 
 };
 
-export default Board;
+export default Game;

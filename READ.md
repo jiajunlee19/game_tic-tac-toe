@@ -6,7 +6,7 @@
 3. Indicates when a player has won the game 
 4. Indicates the game is tied when the board is full but there's no winner
 5. Stores a game’s history as a game progresses
-6. Allows players to timetravel to previous moves based on the game's history
+6. Show current move and allows players to timetravel to previous moves based on the game's history
 
 # Ideas
 1. For the current move only, show “You are at move #…” instead of a button.
