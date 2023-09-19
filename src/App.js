@@ -74,7 +74,6 @@ function Board( {board, isXNext, onPlay} ) {
   function getGameStatus(board, isXNext) {
     const winner = calculateWinner(board);
     const isBoardFull = checkIsBoardFull(board);
-    let status = '';
     if (winner) {
       return 'Winner: ' + winner;
     }
@@ -132,7 +131,7 @@ function Game() {
     setCurrentMove(nextHistory.length -1);
   };
 
-  function getMoveHistory(history) {
+  function getMoveHistory(history, currentMove) {
 
     let moves = [];
     history.forEach((move, moveIndex) => {
@@ -140,15 +139,27 @@ function Game() {
       let moveDescription = '';
 
       if (moveIndex === 0) {
-        moveDescription = 'Go to game start';
+        moveDescription = 
+          <button onClick={() => handleMoveClick(moveIndex)}>
+            Go to game start
+          </button>;
+      }
+      else if (moveIndex === currentMove) {
+        moveDescription = 
+          <div>
+            {'Current move #' + moveIndex + ": " + move.slice(0, moveIndex)}
+          </div>
       }
       else {
-        moveDescription = 'Go to move #' + moveIndex + ": " + move.slice(0, moveIndex)
+        moveDescription = 
+          <button onClick={() => handleMoveClick(moveIndex)}>
+            {'Go to move #' + moveIndex + ": " + move.slice(0, moveIndex)}
+          </button>
       }
-
+      
       moves.push(
         <li key={moveIndex}>
-          <button onClick={() => handleMoveClick(moveIndex)}>{moveDescription}</button>
+          {moveDescription}
         </li>
       );
 
@@ -164,7 +175,7 @@ function Game() {
         <Board board={currentBoard} isXNext={isXNext} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{getMoveHistory(history)}</ol>
+        <ol>{getMoveHistory(history, currentMove)}</ol>
       </div>
     </div>
   );
