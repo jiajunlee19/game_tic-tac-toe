@@ -126,6 +126,12 @@ function Game() {
     setCurrentMove(nextHistory.length - 1);
   };
 
+  function handleMoveClick(moveIndex) {
+    const nextHistory = history.slice(0, moveIndex + 1);
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length -1);
+  };
+
   function getMoveHistory(history) {
 
     let moves = [];
@@ -137,12 +143,12 @@ function Game() {
         moveDescription = 'Go to game start';
       }
       else {
-        moveDescription = move
+        moveDescription = 'Go to move #' + moveIndex + ": " + move.slice(0, moveIndex)
       }
 
       moves.push(
         <li key={moveIndex}>
-          <button>{moveDescription}</button>
+          <button onClick={() => handleMoveClick(moveIndex)}>{moveDescription}</button>
         </li>
       );
 
