@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './App.css';
 
-function Square( {square, onSquareClick} ) {
+function Square( {squareClass, square, onSquareClick} ) {
 
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={squareClass} onClick={onSquareClick}>
       {square}
     </button>
   );
@@ -22,7 +22,7 @@ function Board( {board, isXNext, onPlay} ) {
   function handleSquareClick(squareIndex) {
 
     //break if square is already marked or there's a winner or board is fully marked
-    if (board[squareIndex] || calculateWinner(board) || checkIsBoardFull(board)) {
+    if (board[squareIndex] || calculateWinner(board)[0] || checkIsBoardFull(board)) {
       return;
     }
 
@@ -64,15 +64,15 @@ function Board( {board, isXNext, onPlay} ) {
     for (let i=0; i<winningConditions.length; i++) {
       const [a, b, c] = winningConditions[i]
       if (board[a] && (board[a] === board[b]) && (board[a] === board[c])) {
-        return board[a];
+        return [board[a], winningConditions[i]];
       }
     };
-    return null;
+    return [null, []];
   };
 
   // Show game status
   function getGameStatus(board, isXNext) {
-    const winner = calculateWinner(board);
+    const winner = calculateWinner(board)[0];
     const isBoardFull = checkIsBoardFull(board);
     if (winner) {
       return 'Winner: ' + winner;
@@ -91,7 +91,17 @@ function Board( {board, isXNext, onPlay} ) {
 
     let rowHtml = [];  
     for (let i=j; i<j+3; i++) {
-      rowHtml.push( <Square key={i} square={board[i]} onSquareClick={ () => handleSquareClick(i) } /> );
+
+      //color winning square if any
+      let squareClass = 'square';
+      if (calculateWinner(board)[0]) {
+        const [a, b, c] = calculateWinner(board)[1]
+        if (i === a || i === b || i === c) {
+          squareClass = 'square-win';
+        }
+      }
+
+      rowHtml.push( <Square key={i} squareClass={squareClass} square={board[i]} onSquareClick={ () => handleSquareClick(i) } /> );
     };
 
     boardHtml.push( <div key={j} className='board-row'>{rowHtml}</div> );
