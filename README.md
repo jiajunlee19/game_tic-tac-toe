@@ -14,7 +14,7 @@
 7. Show current move and allows players to timetravel to previous moves based on the game's history
 
 ### Game wins!
-[!win.PNG](/image/win.PNG)
+![win.PNG](/image/win.PNG)
 
 ### Game ties!
-[!tie.PNG](/image/tie.PNG)
+![tie.PNG](/image/tie.PNG)
