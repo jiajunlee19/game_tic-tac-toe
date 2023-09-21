@@ -23,7 +23,7 @@ function Board( {board, isXNext, onPlay} ) {
 
     //break if square is already marked or there's a winner or board is fully marked
     if (board[squareIndex] || calculateWinner(board)[0] || checkIsBoardFull(board)) {
-      return;
+      // return;
     }
 
     const nextBoard = board.slice();
@@ -36,17 +36,18 @@ function Board( {board, isXNext, onPlay} ) {
     }
     // setBoard(currentBoard);
     // setIsXNext(!isXNext);
-    onPlay(nextBoard);
+    onPlay(nextBoard, squareIndex);
   };
 
   //return True if board is fullly marked, game ties/no winner
   function checkIsBoardFull (board) {
-    board.forEach((square) => {
-      if (square) {
+    for (let i = 0; i < board.length-1; i++) {
+      if (!board[i]) {
+        //if any square is null, then not full (false)
         return false;
       }
-      return true;
-    });
+    }
+    return true;
   };
 
   //return Winner if winning condition met
@@ -74,6 +75,7 @@ function Board( {board, isXNext, onPlay} ) {
   function getGameStatus(board, isXNext) {
     const winner = calculateWinner(board)[0];
     const isBoardFull = checkIsBoardFull(board);
+    console.log(isBoardFull)
     if (winner) {
       return 'Winner: ' + winner;
     }
@@ -125,7 +127,10 @@ function Game() {
   //Game always start with player X, even-move# is always Player X and odd-move# is always Player O
   const isXNext = currentMove % 2 === 0 ? true: false
 
-  function handlePlay(nextBoard) {
+  //Define setMoveHistory like [Player X -> position 0, ...]
+  const [moveHistory, setMoveHistory] = useState([]);
+
+  function handlePlay(nextBoard, squareIndex) {
     // setBoard(nextBoard);
     //slice to the current history and add current move as next history
     const nextHistory = [...history.slice(0, currentMove + 1), nextBoard];
@@ -133,6 +138,8 @@ function Game() {
 
     // setIsXNext(!isXNext);
     setCurrentMove(nextHistory.length - 1);
+
+    setMoveHistory([...moveHistory.slice(0, currentMove + 1), `Player ${nextBoard[squareIndex]} --> position ${squareIndex}`]);
   };
 
   function handleMoveClick(moveIndex) {
@@ -157,13 +164,13 @@ function Game() {
       else if (moveIndex === currentMove) {
         moveDescription = 
           <div>
-            {'Current move #' + moveIndex + ": " + move.slice(0, moveIndex)}
+            {'Current move #' + moveIndex + ': ' + moveHistory[moveIndex-1]}
           </div>
       }
       else {
         moveDescription = 
           <button onClick={() => handleMoveClick(moveIndex)}>
-            {'Go to move #' + moveIndex + ": " + move.slice(0, moveIndex)}
+            {'Go to move #' + moveIndex + ': ' + moveHistory[moveIndex-1]}
           </button>
       }
       

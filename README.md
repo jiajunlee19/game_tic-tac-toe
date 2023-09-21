@@ -12,3 +12,9 @@
 5. Indicates the game is tied when the board is full but there's no winner
 6. Stores a game’s history as a game progresses
 7. Show current move and allows players to timetravel to previous moves based on the game's history
+
+### Game wins!
+[!win.PNG](/image/win.PNG)
+
+### Game ties!
+[!tie.PNG](/image/tie.PNG)
