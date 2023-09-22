@@ -23,7 +23,7 @@ function Board( {board, isXNext, onPlay} ) {
 
     //break if square is already marked or there's a winner or board is fully marked
     if (board[squareIndex] || calculateWinner(board)[0] || checkIsBoardFull(board)) {
-      // return;
+      return;
     }
 
     const nextBoard = board.slice();
