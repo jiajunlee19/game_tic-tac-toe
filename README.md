@@ -1,4 +1,6 @@
 # Tic-Tac-Toe Game
+App Page Link: [https://jiajunlee19.github.io/game_tic-tac-toe/](https://jiajunlee19.github.io/game_tic-tac-toe/) 
+
 In this project, the Tic-Tac-Toe game is built using [React JS](https://nodejs.org/en/) ```npm install create-react-app```
 1. In Commmand Prompt, cd to the project directory.
 2. npm start
