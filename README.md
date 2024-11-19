@@ -1,10 +1,14 @@
 # Tic-Tac-Toe Game
-App Page Link: [https://jiajunlee19.github.io/game_tic-tac-toe/](https://jiajunlee19.github.io/game_tic-tac-toe/) 
+In this project, the Tic-Tac-Toe game is built using [React JS](https://nodejs.org/en/).
 
-In this project, the Tic-Tac-Toe game is built using [React JS](https://nodejs.org/en/) ```npm install create-react-app```
-1. In Commmand Prompt, cd to the project directory.
-2. npm start
-3. Enjoy the game!
+To play the game online, visit: [https://jiajunlee19.github.io/game_tic-tac-toe/](https://jiajunlee19.github.io/game_tic-tac-toe/) 
+
+To clone and install:
+1. `git clone "https://github.com/jiajunlee19/game_tic-tac-toe.git"`
+2. `cd path/to/project`
+3. `npm install`
+4. `npm start`
+5. Enjoy the game in [http://localhost:3000/game_tic-tac-toe](http://localhost:3000/game_tic-tac-toe)
 
 
 ### Features
